@@ -49,6 +49,62 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
+function CodeBlock({ children }: { children: React.ReactNode }) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    // Extract text from the <code> element inside the <pre>.
+    const el = (children as { props?: { children?: React.ReactNode } })?.props?.children;
+    const text = extractText(el);
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+      } finally {
+        document.body.removeChild(ta);
+      }
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  return (
+    <div className="group/code relative my-3">
+      <button
+        onClick={copy}
+        title={copied ? 'Copied' : 'Copy code'}
+        aria-label={copied ? 'Copied' : 'Copy code'}
+        className="absolute right-2 top-2 z-10 rounded-md bg-surface-800/80 p-1.5 text-surface-200
+                   opacity-0 backdrop-blur transition-opacity hover:bg-surface-800
+                   group-hover/code:opacity-100 dark:bg-surface-700/80 dark:hover:bg-surface-700"
+      >
+        {copied ? <IconCheck className="h-4 w-4 text-accent" /> : <IconCopy className="h-4 w-4" />}
+      </button>
+      <pre className="overflow-x-auto rounded-lg bg-surface-900 p-4 text-sm leading-6
+                     dark:bg-surface-950 [&_code]:bg-transparent [&_code]:p-0">
+        {children}
+      </pre>
+    </div>
+  );
+}
+
+/** Recursively extracts text content from a React node (string | element | array). */
+function extractText(node: React.ReactNode): string {
+  if (typeof node === 'string') return node;
+  if (Array.isArray(node)) return node.map(extractText).join('');
+  if (node && typeof node === 'object' && 'props' in node) {
+    return extractText((node as { props: { children?: React.ReactNode } }).props.children);
+  }
+  return '';
+}
+
 function MessageBubble({ message, isStreaming }: Props) {
   const isUser = message.role === 'user';
 
@@ -91,6 +147,7 @@ function MessageBubble({ message, isStreaming }: Props) {
                 rehypePlugins={[rehypeHighlight]}
                 components={{
                   a: ({ ...props }) => <a {...props} target="_blank" rel="noreferrer noopener" />,
+                  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
                 }}
               >
                 {message.content}
