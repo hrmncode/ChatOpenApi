@@ -1,0 +1,24 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+.env
+.env.*
+!.env.example
+
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+
+# Vite boilerplate
+src/App.css
+src/assets/**
+public/icons.svg
+public/vite.svg
