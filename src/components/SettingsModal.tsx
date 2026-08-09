@@ -16,7 +16,6 @@ const PRESETS = [
   { name: 'OpenRouter', baseUrl: 'https://openrouter.ai/api/v1', model: 'openai/gpt-4o-mini' },
   { name: 'Groq', baseUrl: 'https://api.groq.com/openai/v1', model: 'llama-3.3-70b-versatile' },
   { name: 'Together', baseUrl: 'https://api.together.xyz/v1', model: 'meta-llama/Llama-3-70b-chat-hf' },
-  { name: '9Router (local)', baseUrl: '/proxy/9router/v1', model: 'kimi-k3' },
   { name: 'Ollama (local)', baseUrl: 'http://localhost:11434/v1', model: 'llama3' },
   { name: 'LM Studio (local)', baseUrl: 'http://localhost:1234/v1', model: 'local-model' },
 ];
