@@ -108,55 +108,64 @@ function extractText(node: React.ReactNode): string {
 function MessageBubble({ message, isStreaming }: Props) {
   const isUser = message.role === 'user';
 
+  if (isUser) {
+    return (
+      <div className="group w-full animate-fade-in border-b border-surface-100 dark:border-surface-700/40">
+        <div className="mx-auto flex max-w-3xl justify-end px-4 py-5 sm:px-6">
+          <div className="flex min-w-0 flex-col items-end gap-1">
+            <p className="whitespace-pre-wrap break-words rounded-2xl rounded-tr-sm bg-accent/10
+                          px-4 py-2.5 text-[15px] leading-7 dark:bg-accent/15">
+              {message.content}
+            </p>
+            {!isStreaming && message.content && (
+              <div className="flex opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100">
+                <CopyButton text={message.content} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
-      className={cn(
-        'group w-full animate-fade-in border-b border-surface-100 dark:border-surface-700/40',
-        isUser ? 'bg-transparent' : 'bg-surface-50/60 dark:bg-surface-900/40',
-      )}
+      className="group w-full animate-fade-in border-b border-surface-100 dark:border-surface-700/40
+                 bg-surface-50/60 dark:bg-surface-900/40"
     >
       <div className="mx-auto flex max-w-3xl gap-3 px-4 py-5 sm:gap-4 sm:px-6">
         <div
-          className={cn(
-            'flex h-7 w-7 shrink-0 select-none items-center justify-center rounded-md text-xs font-semibold text-white',
-            isUser ? 'bg-surface-700 dark:bg-surface-200 dark:text-surface-900' : 'bg-accent',
-          )}
+          className="flex h-7 w-7 shrink-0 select-none items-center justify-center rounded-md text-xs font-semibold text-white bg-accent"
           aria-hidden
         >
-          {isUser ? 'U' : 'AI'}
+          AI
         </div>
 
         <div className="min-w-0 flex-1">
           <div className="mb-1 flex items-center gap-2">
-            <span className="text-sm font-semibold">{isUser ? 'You' : 'Assistant'}</span>
-            {message.model && !isUser && (
+            <span className="text-sm font-semibold">Assistant</span>
+            {message.model && (
               <span className="truncate text-xs text-surface-700/50 dark:text-surface-200/40">
                 {message.model}
               </span>
             )}
           </div>
 
-          {isUser ? (
-            <p className="whitespace-pre-wrap break-words text-[15px] leading-7">
+          <div className={cn('prose-chat', isStreaming && !message.content && 'caret')}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
+              components={{
+                a: ({ ...props }) => <a {...props} target="_blank" rel="noreferrer noopener" />,
+                pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
+              }}
+            >
               {message.content}
-            </p>
-          ) : (
-            <div className={cn('prose-chat', isStreaming && !message.content && 'caret')}>
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight]}
-                components={{
-                  a: ({ ...props }) => <a {...props} target="_blank" rel="noreferrer noopener" />,
-                  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
-                }}
-              >
-                {message.content}
-              </ReactMarkdown>
-              {isStreaming && message.content && (
-                <span className="ml-0.5 inline-block animate-blink text-accent">▍</span>
-              )}
-            </div>
-          )}
+            </ReactMarkdown>
+            {isStreaming && message.content && (
+              <span className="ml-0.5 inline-block animate-blink text-accent">▍</span>
+            )}
+          </div>
 
           {message.error && (
             <div
