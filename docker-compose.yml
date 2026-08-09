@@ -2,8 +2,9 @@ services:
   app:
     build: .
     container_name: chatopenapi
-    ports:
-      - "8080:8080"
+    # host network so 127.0.0.1 inside the container reaches the host's
+    # localhost (9Router, Ollama, etc.). No port mapping needed.
+    network_mode: host
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/"]
