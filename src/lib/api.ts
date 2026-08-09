@@ -21,6 +21,19 @@ function normalizeBaseUrl(baseUrl: string): string {
   return baseUrl.trim().replace(/\/+$/, '');
 }
 
+/**
+ * Rewrites an absolute URL (http:// or https://) to a same-origin proxy path
+ * so the browser never fires a CORS preflight. Relative baseUrls (e.g.
+ * "/proxy/9router/v1") are returned untouched — they're already same-origin.
+ */
+function proxyUrl(baseUrl: string, path: string): string {
+  const base = normalizeBaseUrl(baseUrl);
+  // Relative → already same-origin, use as-is.
+  if (base.startsWith('/')) return `${base}${path}`;
+  // Absolute → route through the generic CORS proxy.
+  return `/proxy/remote/${base}${path}`;
+}
+
 function headers(provider: Provider): HeadersInit {
   return {
     'Content-Type': 'application/json',
@@ -51,7 +64,7 @@ async function parseError(res: Response): Promise<string> {
 }
 
 export async function fetchModels(provider: Provider, signal?: AbortSignal): Promise<ModelInfo[]> {
-  const res = await fetch(`${normalizeBaseUrl(provider.baseUrl)}/models`, {
+  const res = await fetch(proxyUrl(provider.baseUrl, '/models'), {
     headers: headers(provider),
     signal,
   });
@@ -86,7 +99,7 @@ export async function streamCompletion({
   signal,
   onToken,
 }: StreamOptions): Promise<string> {
-  const res = await fetch(`${normalizeBaseUrl(provider.baseUrl)}/chat/completions`, {
+  const res = await fetch(proxyUrl(provider.baseUrl, '/chat/completions'), {
     method: 'POST',
     headers: headers(provider),
     signal,
@@ -157,7 +170,7 @@ export async function fetchCompletion({
   maxTokens,
   signal,
 }: Omit<StreamOptions, 'onToken'>): Promise<string> {
-  const res = await fetch(`${normalizeBaseUrl(provider.baseUrl)}/chat/completions`, {
+  const res = await fetch(proxyUrl(provider.baseUrl, '/chat/completions'), {
     method: 'POST',
     headers: headers(provider),
     signal,
