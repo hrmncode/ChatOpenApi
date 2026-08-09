@@ -168,7 +168,7 @@ export default function SettingsModal({ open, onClose }: Props) {
                     name="active-provider"
                     checked={settings.activeProviderId === p.id}
                     onChange={() => void setActiveProvider(p.id)}
-                    className="h-4 w-4 shrink-0 accent-[#10a37f]"
+                    className="h-4 w-4 shrink-0 accent-surface-900 dark:accent-surface-100"
                     aria-label={`Use ${p.name}`}
                   />
                   <div className="min-w-0 flex-1">
@@ -374,7 +374,7 @@ export default function SettingsModal({ open, onClose }: Props) {
                   step={0.05}
                   value={settings.temperature}
                   onChange={(e) => void update({ temperature: Number(e.target.value) })}
-                  className="w-full accent-[#10a37f]"
+                  className="w-full accent-surface-900 dark:accent-surface-100"
                 />
               </div>
 
@@ -398,7 +398,7 @@ export default function SettingsModal({ open, onClose }: Props) {
                   type="checkbox"
                   checked={settings.streaming}
                   onChange={(e) => void update({ streaming: e.target.checked })}
-                  className="h-4 w-4 accent-[#10a37f]"
+                  className="h-4 w-4 accent-surface-900 dark:accent-surface-100"
                 />
                 Stream responses
               </label>
@@ -408,7 +408,7 @@ export default function SettingsModal({ open, onClose }: Props) {
                   type="checkbox"
                   checked={settings.sendOnEnter}
                   onChange={(e) => void update({ sendOnEnter: e.target.checked })}
-                  className="h-4 w-4 accent-[#10a37f]"
+                  className="h-4 w-4 accent-surface-900 dark:accent-surface-100"
                 />
                 Enter sends message
               </label>

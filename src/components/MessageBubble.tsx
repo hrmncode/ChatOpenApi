@@ -110,13 +110,14 @@ function MessageBubble({ message, isStreaming }: Props) {
 
   if (isUser) {
     return (
-      <div className="group w-full animate-fade-in border-b border-surface-100 dark:border-surface-700/40">
-        <div className="mx-auto flex max-w-3xl justify-end px-4 py-5 sm:px-6">
+      <div className="group w-full animate-fade-in">
+        <div className="mx-auto flex max-w-3xl justify-end px-4 py-3 sm:px-6">
           <div className="flex min-w-0 flex-col items-end gap-1">
-            <p className="whitespace-pre-wrap break-words rounded-2xl rounded-tr-sm bg-accent/10
-                          px-4 py-2.5 text-[15px] leading-7 dark:bg-accent/15">
+            <div className="whitespace-pre-wrap break-words rounded-3xl rounded-tr-md
+                            bg-surface-100 px-4 py-2.5 text-[15px] leading-7
+                            dark:bg-surface-800">
               {message.content}
-            </p>
+            </div>
             {!isStreaming && message.content && (
               <div className="flex opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100">
                 <CopyButton text={message.content} />
@@ -129,13 +130,12 @@ function MessageBubble({ message, isStreaming }: Props) {
   }
 
   return (
-    <div
-      className="group w-full animate-fade-in border-b border-surface-100 dark:border-surface-700/40
-                 bg-surface-50/60 dark:bg-surface-900/40"
-    >
-      <div className="mx-auto flex max-w-3xl gap-3 px-4 py-5 sm:gap-4 sm:px-6">
+    <div className="group w-full animate-fade-in px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-3xl gap-3 sm:gap-4">
         <div
-          className="flex h-7 w-7 shrink-0 select-none items-center justify-center rounded-md text-xs font-semibold text-white bg-accent"
+          className="flex h-7 w-7 shrink-0 select-none items-center justify-center rounded-full
+                     border border-surface-300 text-xs font-semibold text-surface-600
+                     dark:border-surface-600 dark:text-surface-300"
           aria-hidden
         >
           AI

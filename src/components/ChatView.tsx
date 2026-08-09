@@ -38,14 +38,11 @@ export default function ChatView() {
     return (
       <div className="flex flex-1 items-center justify-center px-6">
         <div className="max-w-md text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent text-xl font-semibold text-white">
-            AI
-          </div>
-          <h1 className="mb-2 text-2xl font-semibold">ChatOpenApi</h1>
-          <p className="mb-6 text-sm text-surface-700/70 dark:text-surface-200/50">
+          <h1 className="mb-3 text-2xl font-semibold text-surface-800 dark:text-surface-100">What can I help with?</h1>
+          <p className="mb-6 text-sm text-surface-500 dark:text-surface-400">
             A ChatGPT-style interface for any OpenAI-compatible API.
           </p>
-          <p className="inline-flex items-center gap-2 rounded-full bg-surface-50 px-3 py-1.5 text-xs text-surface-700/70 dark:bg-surface-900 dark:text-surface-200/50">
+          <p className="inline-flex items-center gap-2 rounded-full bg-surface-100 px-3 py-1.5 text-xs text-surface-500 dark:bg-surface-800 dark:text-surface-400">
             <IconLock className="h-3.5 w-3.5" />
             Chats never leave your browser
           </p>

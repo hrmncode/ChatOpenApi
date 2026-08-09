@@ -10,12 +10,10 @@
   }
 
   body {
-    @apply bg-white text-surface-900 antialiased dark:bg-surface-800 dark:text-surface-100;
-    /* Prevent iOS Safari from zooming when focusing the composer. */
+    @apply bg-surface-0 text-surface-900 antialiased dark:bg-surface-950 dark:text-surface-100;
     -webkit-text-size-adjust: 100%;
   }
 
-  /* Respect notches and the iOS home indicator. */
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
@@ -32,11 +30,12 @@
   }
 
   .btn-primary {
-    @apply btn bg-accent text-white hover:bg-accent-hover;
+    @apply btn bg-surface-900 text-white hover:bg-surface-800
+           dark:bg-surface-100 dark:text-surface-900 dark:hover:bg-surface-200;
   }
 
   .btn-ghost {
-    @apply btn text-surface-700 hover:bg-surface-100 dark:text-surface-200 dark:hover:bg-surface-700;
+    @apply btn text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800;
   }
 
   .btn-danger {
@@ -44,12 +43,12 @@
   }
 
   .input {
-    @apply w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm
+    @apply w-full rounded-lg border border-surface-200 bg-surface-0 px-3 py-2 text-sm
            text-surface-900 outline-none transition-colors
-           placeholder:text-surface-200/90
-           focus:border-accent focus:ring-1 focus:ring-accent
+           placeholder:text-surface-400
+           focus:border-surface-400 focus:ring-1 focus:ring-surface-400
            dark:border-surface-700 dark:bg-surface-900 dark:text-surface-100
-           dark:placeholder:text-surface-700;
+           dark:placeholder:text-surface-600;
   }
 
   .label {
@@ -57,7 +56,7 @@
   }
 
   .hint {
-    @apply mt-1 text-xs text-surface-700/70 dark:text-surface-200/50;
+    @apply mt-1 text-xs text-surface-500;
   }
 }
 
@@ -99,13 +98,13 @@
 }
 
 .prose-chat blockquote {
-  @apply border-l-2 border-surface-200 pl-4 italic text-surface-700
-         dark:border-surface-700 dark:text-surface-200/80;
+  @apply border-l-2 border-surface-200 pl-4 italic text-surface-500
+         dark:border-surface-700;
 }
 
 .prose-chat code:not(pre code) {
   @apply rounded bg-surface-100 px-1.5 py-0.5 font-mono text-[13px]
-         text-surface-900 dark:bg-surface-900 dark:text-surface-100;
+         text-surface-900 dark:bg-surface-800 dark:text-surface-100;
 }
 
 .prose-chat pre {
@@ -138,12 +137,12 @@
 /* Scrollbars */
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: rgb(156 163 175 / 0.4) transparent;
+  scrollbar-color: rgb(161 161 170 / 0.3) transparent;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
@@ -151,11 +150,11 @@
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-surface-200/60 dark:bg-surface-700;
+  @apply rounded-full bg-surface-200/80 dark:bg-surface-700;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  @apply bg-surface-200 dark:bg-surface-700/80;
+  @apply bg-surface-300 dark:bg-surface-600;
 }
 
 /* Streaming caret */

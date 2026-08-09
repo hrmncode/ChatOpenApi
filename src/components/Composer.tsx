@@ -50,12 +50,13 @@ export default function Composer() {
   };
 
   return (
-    <div className="safe-bottom border-t border-surface-100 bg-white/90 backdrop-blur dark:border-surface-700/60 dark:bg-surface-800/90">
-      <div className="mx-auto max-w-3xl px-3 py-3 sm:px-6 sm:py-4">
+    <div className="safe-bottom bg-gradient-to-t from-surface-0 via-surface-0 to-transparent
+                    px-3 pb-3 pt-2 dark:from-surface-950 dark:via-surface-950 sm:px-4 sm:pb-4">
+      <div className="mx-auto max-w-3xl">
         <div
-          className="flex items-end gap-2 rounded-2xl border border-surface-200 bg-white p-2
-                     shadow-sm transition-colors focus-within:border-accent
-                     dark:border-surface-700 dark:bg-surface-900"
+          className="flex items-end gap-2 rounded-[26px] border border-surface-200 bg-surface-0 p-2 pl-4
+                     shadow-sm transition-colors focus-within:border-surface-400
+                     dark:border-surface-700 dark:bg-surface-900 dark:focus-within:border-surface-500"
         >
           <textarea
             ref={ref}
@@ -66,20 +67,23 @@ export default function Composer() {
             placeholder={hasProvider ? 'Send a message…' : 'Add a provider in Settings to start'}
             disabled={!hasProvider}
             aria-label="Message input"
-            className="scrollbar-thin max-h-[200px] flex-1 resize-none bg-transparent px-2 py-1.5
-                       text-[16px] leading-6 outline-none placeholder:text-surface-200
-                       disabled:cursor-not-allowed dark:placeholder:text-surface-700"
+            className="scrollbar-thin max-h-[200px] flex-1 resize-none bg-transparent px-1 py-1.5
+                       text-[16px] leading-6 outline-none placeholder:text-surface-400
+                       disabled:cursor-not-allowed dark:placeholder:text-surface-600"
           />
 
           {streaming ? (
-            <button onClick={stop} className="btn-ghost shrink-0 !px-2.5" title="Stop generating" aria-label="Stop generating">
+            <button onClick={stop} className="shrink-0 rounded-full bg-surface-900 p-2 text-white
+                                           transition-opacity hover:opacity-80 dark:bg-surface-100
+                                           dark:text-surface-900" title="Stop generating" aria-label="Stop generating">
               <IconStop className="h-5 w-5" />
             </button>
           ) : (
             <button
               onClick={submit}
               disabled={!text.trim() || !hasProvider}
-              className="btn-primary shrink-0 !px-2.5"
+              className="shrink-0 rounded-full bg-surface-900 p-2 text-white transition-opacity
+                         hover:opacity-80 disabled:opacity-30 dark:bg-surface-100 dark:text-surface-900"
               title="Send"
               aria-label="Send message"
             >
